@@ -5,7 +5,7 @@ def read(filename):
     return open(os.path.join(os.path.join(os.path.dirname(__file__), filename))).read()
 
 setup(name="zkaffold",
-      version='0.0.11',
+      version='0.0.12.dev0',
       description="Build out demonstration content for plone",
       long_description=read('README.rst'),
       author="Pat Smith",
