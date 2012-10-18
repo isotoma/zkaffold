@@ -1,8 +1,13 @@
+import os
 from setuptools import setup, find_packages
 
+def read(filename):
+    return open(os.path.join(os.path.join(os.path.dirname(__file__), filename))).read()
+
 setup(name="zkaffold",
-      version="0.0.8",
+      version="0.0.9",
       description="Build out demonstration content for plone",
+      long_description=read('README.rst'),
       author="Pat Smith",
       author_email="pat.smith@isotoma.com",
       url="http://pypi.python.org/pypi/zkaffold",

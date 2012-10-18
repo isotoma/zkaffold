@@ -9,7 +9,6 @@ from lxml import etree as ElementTree
 
 from DateTime import DateTime
 
-from Products.Archetypes.tests.test_fields import FakeRequest
 from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowTool import WorkflowException
@@ -45,11 +44,20 @@ class MemberImporter:
     
     def _getMemberRoles(self, elem):
         paramselement = elem.find('roles')
+        if not paramselement:
+            return []
         return [i.text for i in paramselement.findall('role')]
+
+    def _getMemberGroups(self, elem):
+        paramselement = elem.find('groups')
+        if not paramselement:
+            return []
+        return [i.text for i in paramselement.findall('group')]
    
     def importMembers(self, portal):
         print "\n= Importing Members =========================================="
         pm = portal.portal_membership
+        pg = portal.portal_groups
         mdc = getToolByName(portal, 'portal_memberdata')
         fac = getToolByName(portal, 'portal_factory')
         for elem in self.root:
@@ -72,4 +80,6 @@ class MemberImporter:
                     pm.addMember(id, pwd, [], [], md)
                     user = pm.getMemberById(id)
                     user.setSecurityProfile(password=pwd, roles=roles)
+                    for group in self._getMemberGroups(elem):
+                        pg.getGroupById(group).addMember(id)
         print "==============================================================\n"
