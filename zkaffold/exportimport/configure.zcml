@@ -9,7 +9,7 @@
         title="zkaffold"
         description="Import site structure."
         handler=".import_site_structure">
-        <depends name="plone-final" />
+        <depends name="content" />
     </genericsetup:importStep>
 
     <genericsetup:importStep
