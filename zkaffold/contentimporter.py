@@ -116,7 +116,7 @@ class ContentImporter:
                 no_usable_default = lambda f:f.type!='boolean' and not bool(f.default)
                 required_fields = [f.getName() for f in type['schema'].filterFields(not_reference, no_usable_default, required=True)]
 
-        missing_fields = [f for f in required_fields if f not in given_fields]
+        missing_fields = [f for f in required_fields if f not in given_fields and f != 'id']
         return missing_fields
 
     def publish(self, obj, transition='publish', state='published'):
